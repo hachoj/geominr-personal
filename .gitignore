@@ -1,0 +1,115 @@
+#---------------------------------------------------------------------
+# Global ignores
+#---------------------------------------------------------------------
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Virtual environments and packaging artifacts
+.env
+.venv
+venv/
+env/
+.python-version
+pip-wheel-metadata/
+*.egg-info/
+dist/
+build/
+.eggs/
+
+# Testing, coverage, and type checking caches
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.coverage*
+htmlcov/
+.hypothesis/
+
+# Editors and OS cruft
+.idea/
+.vscode/
+.claude/
+.agents/
+.codex/
+*.swp
+*.swo
+.DS_Store
+Thumbs.db
+
+#---------------------------------------------------------------------
+# Project-specific generated artifacts
+#---------------------------------------------------------------------
+
+# Logs and experiment trackers
+logs/
+wandb/
+output/logs/
+
+# Training checkpoints and large binaries
+output/checkpoints/
+*.pt
+*.pth
+*.ckpt
+*.onnx
+*.bin
+*.np[zy]
+
+# Generated outputs and reports
+output/
+
+# Data dumps (retain lightweight config files under configs/)
+data/dataset
+data/dataset/
+data/dataset_wds
+data/dataset_wds/
+data/dataset_tightspan/
+data/datasets/
+data/Original_Data_in_DICOM_Format
+data/Original_Data_in_DICOM_Format/
+data/removed_slices
+data/removed_slices/
+
+# Local cluster/data-movement helpers
+slurm/
+move_data.sh
+
+# Local assistant/internal notes
+AGENTS.md
+CLAUDE.md
+unmarked-revisions.md
+
+# Temporary artifacts
+*.log
+*.tmp
+*.bak
+*.orig
+
+# IDE metadata created by Cursor / notebooks
+.cursor/
+.ipynb_checkpoints/
+
+#---------------------------------------------------------------------
+# LaTeX build artifacts (paper/manuscript/)
+#---------------------------------------------------------------------
+*.aux
+*.bbl
+*.blg
+*.fdb_latexmk
+*.fls
+*.synctex.gz
+*.out
+*.toc
+*.lof
+*.lot
+*.abs
+*.spl
+# Compiled manuscript PDF only — figures under paper/manuscript/figs/ stay tracked
+paper/manuscript/*.pdf
+
+#---------------------------------------------------------------------
+# Paper sources & internal rebuttal work — kept on disk, excluded from the public repo
+#---------------------------------------------------------------------
+paper/
+/geominr-manuscript-old.pdf
+*.pdf
+

@@ -1,0 +1,13 @@
+_target_: geominr.models.ViT.ViT.ViT
+dim: 384
+num_heads: 6
+num_blocks: 12
+mlp_ratio: 4
+input_size: ${train.image_size}
+patch_kernel: [2, 2]
+patch_stride: [2, 2]
+patch_padding: [0, 0]
+drop_path_p: 0.0
+norm: layernorm
+use_swiglu: true
+use_bias: true

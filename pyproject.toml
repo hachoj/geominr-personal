@@ -1,0 +1,22 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "geominr"
+version = "0.1.0"
+description = "Geometry-Aware Implicit Neural Reconstruction of Oblique Micro-Ultrasound Scans"
+readme = "README.md"
+requires-python = ">=3.10"
+dynamic = ["dependencies"]
+
+[tool.setuptools.dynamic]
+dependencies = { file = ["requirements.txt"] }
+
+[tool.setuptools.packages.find]
+include = ["geominr*", "data*"]
+
+[project.optional-dependencies]
+# ViT-S/2 baseline data pipeline (data/data-vit.py) uses NVIDIA DALI.
+# Pick the wheel matching your CUDA version (e.g. nvidia-dali-cuda120).
+vit = ["nvidia-dali-cuda120"]

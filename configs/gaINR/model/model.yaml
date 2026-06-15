@@ -1,0 +1,15 @@
+_target_: geominr.models.model.model
+in_dim: 1
+K: 128
+embed_dim: 128
+init_cab_weight: 0.1
+cab_channel_reduction: 16
+squeeze_factor: 4
+H: 64
+W: 64
+num_heads: 4
+window_size: 8
+mlp_ratio: 4
+num_rhag_blocks: 2
+overlap_ratio: 0.5
+num_hab_blocks: 2

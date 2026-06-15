@@ -1,0 +1,92 @@
+# Ablation: L1 reconstruction loss only
+# = canonical.yaml with: train.lpips_weight=0.0, train.gan_weight=0.0, train.lr_weight=0.0
+# Launch: torchrun --standalone --nproc_per_node=2 scripts/train.py --config configs/runs/abl_l1_only.yaml
+
+run_name: abl_l1_only
+train:
+  seed: 42
+  image_size:
+  - 64
+  - 64
+  batch_size: 128
+  lr_muon: 1e-3
+  lr_adamw: 1e-3
+  adamw_betas: [0.9, 0.95]
+  muon_mode: "match_rms_adamw"
+  min_lr: 1.0e-05
+  warmup_epochs: 10
+  weight_decay: 0.01
+  grad_clip: -1
+  num_epochs: 500
+  lpips_weight: 0.0
+  gan_weight: 0.0
+  gan_start_epoch: 100
+  lr_weight: 0.0
+  save_epoch: 10
+  every_n_steps: 10
+  discriminator_lr_muon: 1e-4
+  discriminator_lr_adamw: 1e-4
+  discriminator_weight_decay: 0.01
+  discriminator_min_lr: 1.0e-06
+  discriminator_warmup_epochs: 10
+  save_dir: output/checkpoints/abl_l1_only
+model:
+  _target_: geominr.models.model.model
+  in_dim: 1
+  K: 128
+  embed_dim: 128
+  init_cab_weight: 0.1
+  cab_channel_reduction: 16
+  squeeze_factor: 4
+  H: 64
+  W: 64
+  num_heads: 4
+  window_size: 8
+  mlp_ratio: 4
+  num_rhag_blocks: 2
+  overlap_ratio: 0.5
+  num_hab_blocks: 2
+discriminator:
+  _target_: geominr.models.discriminator.PatchDiscriminator
+  in_channels: 1
+  base_channels: 64
+data:
+  train_dir: data/dataset/train
+  val_dir: data/dataset/val
+  test_dir: data/dataset/test
+  patch_size:
+  - 64
+  - 64
+  batch_size: 128
+  num_workers: 4
+  val_num_workers: 1
+  pin_memory: true
+  prefetch_factor: 4
+  persistent_workers: true
+  val_prefetch_factor: 2
+  val_persistent_workers: true
+wandb:
+  project: geominr
+  name: abl_l1_only
+  dir: output/wandb/abl_l1_only
+  enabled: false
+eval:
+  model_path: output/checkpoints/abl_l1_only/model_500.pt
+  data_dir: data/dataset/test
+  output_dir: output/eval_results/abl_l1_only
+  batch_size: 256
+  num_workers: 4
+  pin_memory: true
+  seed: 42
+inference:
+  model_path: output/checkpoints/abl_l1_only/model_500.pt
+  image_path: data/Original_Data_in_DICOM_Format/negative/UF181
+  save_path: output/inference/abl_l1_only
+  volume_depth: 48
+  ap_voxel_count: 1536
+  probe_radius: 12.5
+  nn: true
+  linear: true
+  stride:
+  - 56
+  - 56

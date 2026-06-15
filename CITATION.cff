@@ -1,0 +1,28 @@
+cff-version: 1.2.0
+message: "If you use this software, please cite the paper below."
+title: "Geometry-Aware Implicit Neural Reconstruction of Oblique Micro-Ultrasound Scans"
+authors:
+  - family-names: Chojnowski
+    given-names: Harrison
+  - family-names: Ates
+    given-names: Gorkem Can
+  - family-names: Brisbane
+    given-names: Wayne G.
+  - family-names: Shao
+    given-names: Wei
+# DOI and journal reference will be added on publication.
+preferred-citation:
+  type: article
+  title: "Geometry-Aware Implicit Neural Reconstruction of Oblique Micro-Ultrasound Scans"
+  authors:
+    - family-names: Chojnowski
+      given-names: Harrison
+    - family-names: Ates
+      given-names: Gorkem Can
+    - family-names: Brisbane
+      given-names: Wayne G.
+    - family-names: Shao
+      given-names: Wei
+  year: 2026
+  # journal: TBD
+  # doi: TBD

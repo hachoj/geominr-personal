@@ -1,0 +1,82 @@
+# ViT-S/2 patch-interpolation reference baseline (Muon recipe — same optimizer
+# as the HAT canonical, for a fair learned baseline). Pure MSE (no GAN).
+#
+# ViT-S/2 recipe matching the HAT canonical optimizer for a fair learned baseline.
+# Trained for up to 300 epochs; the released checkpoint is model_100.pt (epoch 100).
+# gan_enabled is False, so the GAN/discriminator keys are intentionally omitted.
+# Launch: torchrun --standalone --nproc_per_node=2 scripts/train-vit.py --config configs/runs/vit_baseline.yaml
+run_name: vit_baseline
+
+train:
+  batch_size: 256
+  seed: 42
+  image_size: [64, 64]
+  lr_muon: 1e-3             # same Muon+AdamW recipe as the HAT canonical
+  lr_adamw: 1e-3
+  adamw_betas: [0.9, 0.95]
+  muon_mode: "match_rms_adamw"
+  min_lr: 1e-5
+  warmup_epochs: 30
+  lr_schedule: cosine
+  weight_decay: 0.01
+  num_epochs: 300         # frozen-config value; reused checkpoint is model_100.pt (epoch 100)
+  save_epoch: 10
+  save_dir: output/checkpoints/vit_baseline
+  grad_accum: 1
+  grad_clip: -1
+  every_n_steps: 10
+
+model:
+  _target_: geominr.models.ViT.ViT.ViT
+  dim: 384
+  num_heads: 6
+  num_blocks: 12
+  mlp_ratio: 4
+  input_size: [64, 64]
+  patch_kernel: [2, 2]
+  patch_stride: [2, 2]
+  patch_padding: [0, 0]
+  drop_path_p: 0.0
+  norm: layernorm
+  use_swiglu: true
+  use_bias: true
+
+data:
+  train_dir: data/dataset/train
+  val_dir: data/dataset/val
+  test_dir: data/dataset/test
+  patch_size: [64, 64]
+  batch_size: 256
+  num_workers: 4
+  val_num_workers: 1
+  pin_memory: true
+  prefetch_factor: 4
+  persistent_workers: true
+  val_prefetch_factor: 2
+  val_persistent_workers: true
+
+wandb:
+  project: geominr
+  name: vit_baseline
+  dir: output/wandb/vit_baseline
+  enabled: false
+
+eval:
+  model_path: output/checkpoints/vit_baseline/model_100.pt
+  data_dir: data/dataset/test
+  output_dir: output/eval_results/vit_baseline
+  batch_size: 256
+  num_workers: 4
+  pin_memory: true
+  seed: 42
+
+inference:
+  model_path: output/checkpoints/vit_baseline/model_100.pt
+  image_path: data/Original_Data_in_DICOM_Format/negative/UF181
+  save_path: output/inference/vit_baseline
+  volume_depth: 48
+  ap_voxel_count: 1536
+  probe_radius: 12.5
+  nn: true
+  linear: true
+  stride: [56, 56]
